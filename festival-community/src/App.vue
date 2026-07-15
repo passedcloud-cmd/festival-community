@@ -4,6 +4,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 // 💡 우리가 만든 ChatbotWidget 컴포넌트를 임포트합니다.
 import ChatbotWidget from './components/ChatbotWidget.vue'
+import FestivalMap from './components/FestivalMap.vue'
 </script>
 
 <template>
@@ -21,6 +22,10 @@ import ChatbotWidget from './components/ChatbotWidget.vue'
   </header>
 
   <RouterView />
+
+  <div class="main-content">
+    <FestivalMap />
+  </div>
 
   <ChatbotWidget />
 </template>
@@ -85,5 +90,11 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+  /* 💡 기존 스타일 코드 맨 아래에 그냥 붙여넣으시면 됩니다! */
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  }
 </style>
