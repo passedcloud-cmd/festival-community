@@ -2,6 +2,7 @@
 import festivalData from '@/data/서울_축제공연행사.json'
 import { ref, computed } from 'vue'
 import FestivalMap from '@/components/FestivalMap.vue'
+// import ChatbotWidget from '@/components/ChatbotWidget.vue' 
 
 // 게시판 관련
 import { usePosts } from '../composables/usePosts'
@@ -101,6 +102,9 @@ function handleSubmit({ title, content, tag }) {
         </button>
       </div>
     </section>
+
+    <!-- 5. AI 챗봇 (화면 오른쪽 아래에 고정으로 뜸) -->
+    <!-- <ChatbotWidget /> --> 
   </div>
 </template>
 
