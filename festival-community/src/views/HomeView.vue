@@ -90,7 +90,7 @@ const bookmarkedFestivals = computed(() => {
   return festivals.filter(f => bookmarkedIds.value.includes(f.contentid))
 })
 
-// 💡 하이라이트 + 이동 관련
+// 하이라이트 + 이동 관련
 const highlightedId = ref(null)
 
 async function scrollToFestival(contentid) {
@@ -123,12 +123,12 @@ const {
 
 const editingPost = ref(null)
 
-function handleSubmit({ title, content, generation, password }) {
+function handleSubmit({ title, content, generation, tag, password }) {
   if (editingPost.value) {
-    updatePost(editingPost.value.id, { title, content, generation })
+    updatePost(editingPost.value.id, { title, content, generation, tag })
     editingPost.value = null
   } else {
-    addPost({ title, content, generation, password })
+    addPost({ title, content, generation, tag, password })
   }
 }
 </script>
@@ -153,6 +153,7 @@ function handleSubmit({ title, content, generation, password }) {
       <PostForm
         :editing-post="editingPost"
         :generation-options="generationOptions"
+        :tag-options="tagOptions"
         @submit="handleSubmit"
         @cancel-edit="editingPost = null"
       />
@@ -200,8 +201,10 @@ function handleSubmit({ title, content, generation, password }) {
             {{ isBookmarked(festival.contentid) ? '★' : '☆' }}
           </button>
 
-          <img :src="festival.firstimage" :alt="festival.title" v-if="festival.firstimage" />
+          
           <h3>{{ festival.title }}</h3>
+          <img :src="festival.firstimage" :alt="festival.title" v-if="festival.firstimage" />
+          <div class="no-image-placeholder" v-else></div>
           <p>📍 {{ festival.eventplace }}</p>
           <p>📅 {{ festival.eventstartdate }} ~ {{ festival.eventenddate }}</p>
           <p>💰 {{ festival.usetimefestival }}</p>
@@ -239,19 +242,47 @@ function handleSubmit({ title, content, generation, password }) {
   margin: 0 auto;
   padding: 24px;
 }
+
 .site-header {
   text-align: center;
   margin-bottom: 32px;
+  background: #B5D4F4;
+  border-radius: 12px;
+  padding: 32px 24px;
 }
 .site-header h1 {
-  font-size: 28px;
+  font-size: 26px;
+  font-weight: 800;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  letter-spacing: -0.5px;
+  color: #042C53;
   margin-bottom: 8px;
 }
-.map-section,
+.site-header p {
+  font-size: 14px;
+  color: #0C447C;
+}
+
+.map-section {
+  margin-bottom: 40px;
+}
+
+/* 💡 게시판, 축제 목록을 둥근 박스로 감싸기 */
 .board-section,
 .festival-section {
   margin-bottom: 40px;
+  background: #B5D4F4;
+  border: 0.5px solid #dbe4ec;
+  border-radius: 16px;
+  padding: 24px;
 }
+.board-section h2,
+.festival-section h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
 .festival-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -259,27 +290,57 @@ function handleSubmit({ title, content, generation, password }) {
 }
 .festival-card {
   position: relative;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background: white;
+  border: 0.5px solid #dbe4ec;
+  border-radius: 12px;
   padding: 12px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.festival-card:hover {
+  border-color: #378ADD;
+  transform: translateY(-2px);
 }
 .festival-card img {
   width: 100%;
   height: 150px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
+  background: #eef4fa;
 }
+.festival-card .no-image-placeholder {
+  width: 100%;
+  height: 150px;
+  border-radius: 8px;
+  background: #FAEEDA;
+}
+.festival-card h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 10px 0 6px;
+}
+.festival-card p {
+  font-size: 12px;
+  color: #666;
+  margin: 2px 0;
+}
+
 .more-btn-wrapper {
   display: flex;
   justify-content: center;
   margin-top: 24px;
 }
 .more-btn {
-  padding: 10px 24px;
-  border: 1px solid #ccc;
+  padding: 8px 20px;
+  border: 0.5px solid #FAC775;
   border-radius: 20px;
-  background: white;
+  background: #FAEEDA;
+  color: #633806;
   cursor: pointer;
+  font-size: 13px;
+}
+.more-btn:hover {
+  background: #FAC775;
+  color: #412402;
 }
 
 .category-filter {
@@ -290,20 +351,22 @@ function handleSubmit({ title, content, generation, password }) {
 }
 .category-btn {
   padding: 6px 16px;
-  border: 1px solid #ccc;
+  border: 0.5px solid #ccc;
   border-radius: 20px;
   background: white;
+  color: #666;
   cursor: pointer;
   font-size: 13px;
   transition: all 0.15s ease;
 }
 .category-btn:hover {
-  border-color: #999;
+  border-color: #378ADD;
+  color: #0C447C;
 }
 .category-btn.active {
-  background: #3b82f6;
-  color: white;
-  border-color: #3b82f6;
+  background: #FAC775;
+  color: #412402;
+  border-color: #EF9F27;
 }
 
 .bookmark-btn {
@@ -325,7 +388,12 @@ function handleSubmit({ title, content, generation, password }) {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
 }
 .bookmark-btn.active {
-  color: #f59e0b;
+  color: #EF9F27;
+}
+
+/* 💡 북마크된 카드는 파란 테두리로 강조 */
+.festival-card:has(.bookmark-btn.active) {
+  border: 2px solid #378ADD;
 }
 
 .bookmark-sidebar {
@@ -336,15 +404,17 @@ function handleSubmit({ title, content, generation, password }) {
   max-height: 60vh;
   overflow-y: auto;
   background: white;
-  border: 1px solid #ddd;
+  border: 0.5px solid #dbe4ec;
   border-radius: 12px;
   padding: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  z-index: 10;
+  z-index: 9999;
 }
 .bookmark-sidebar h3 {
   font-size: 14px;
+  font-weight: 500;
   margin: 0 0 12px 0;
+  color: #0C447C;
 }
 .bookmark-list {
   list-style: none;
@@ -360,7 +430,7 @@ function handleSubmit({ title, content, generation, password }) {
   align-items: center;
   font-size: 13px;
   padding: 6px 8px;
-  background: #f8f9fa;
+  background: #FAEEDA;
   border-radius: 6px;
 }
 .bookmark-item-title {
@@ -371,7 +441,7 @@ function handleSubmit({ title, content, generation, password }) {
   cursor: pointer;
 }
 .bookmark-item-title:hover {
-  color: #3b82f6;
+  color: #378ADD;
   text-decoration: underline;
 }
 .bookmark-remove {
@@ -391,7 +461,7 @@ function handleSubmit({ title, content, generation, password }) {
 }
 @keyframes highlight-pulse {
   0% {
-    box-shadow: 0 0 0 3px #3b82f6;
+    box-shadow: 0 0 0 3px #378ADD;
     transform: scale(1.02);
   }
   100% {

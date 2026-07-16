@@ -41,8 +41,8 @@ defineEmits(['update:modelValue'])
   font-size: 13px;
 }
 .tag-filter button.active {
-  background: #333;
-  color: #fff;
-  border-color: #333;
+  background: #FAC775;
+  color: #412402;
+  border-color: #EF9F27;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="map-container-wrapper">
     <div class="map-header">
-      <h2 class="map-title"> 2026년 4월 3일 실시간 혼잡도 지도</h2>
+      <h2 class="map-title">📍 {{ todayLabel }} 실시간 혼잡도 지도</h2>
       <div class="map-legend">
         <span class="legend-item"><span class="dot green"></span>여유</span>
         <span class="legend-item"><span class="dot yellow"></span>보통</span>
@@ -13,6 +13,7 @@
 </template>
 
 <script setup>
+import { getEffectiveTodayNumber, getEffectiveToday } from '@/config/demoDate'
 import { onMounted, onUnmounted } from 'vue'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -22,6 +23,8 @@ import festivalData from '@/assets/data/서울_축제공연행사.json'
 
 let map = null
 const markersMap = new Map()
+const today = getEffectiveToday()
+const todayLabel = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`
 
 // 🎨 1. 상태에 따른 동적 SVG 물방울 마커 생성기
 function createCongestionIcon(status) {
@@ -148,32 +151,28 @@ function generatePopupContent(festival, calculatedStatus, score) {
 }
 
 onMounted(() => {
-  // 꽃축제 5대장이 한눈에 다 보이도록 마포/용산 중심 줌레벨 세팅 (정밀 구도)
-  map = L.map('map').setView([37.535, 127.01], 11)
+  // 서울 중심 좌표로 지도 초기화
+  map = L.map('map').setView([37.5665, 126.9780], 11)
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map)
 
   if (festivalData && festivalData.items) {
+    // 💡 오늘 날짜를 "YYYYMMDD" 숫자 형식으로 변환 (JSON 데이터 날짜 형식과 동일하게)
+    const targetDate = getEffectiveTodayNumber()
+
     festivalData.items.forEach((festival) => {
       const lat = parseFloat(festival.mapy)
       const lng = parseFloat(festival.mapx)
 
-      const targetDate = 20260403
       const startDate = parseInt(festival.eventstartdate, 10)
       const endDate = parseInt(festival.eventenddate, 10)
 
-      // 💡 [초정밀 필터링 조건] 
-      // 1. 기간 내에 2026년 4월 3일이 포함되어야 함
-      // 2. 제목에 '벚꽃', '봄꽃', '봄빛', '미리봄' 단어가 포함된 진짜 벚꽃 테마 축제만 골라내기!
-      const isSpringFlowerFestival = 
-        festival.title.includes('벚꽃') || 
-        festival.title.includes('봄꽃') || 
-        festival.title.includes('봄빛') || 
-        festival.title.includes('미리봄');
+      // 💡 오늘 날짜가 축제 기간(시작일~종료일) 안에 포함되는지 확인
+      const isHappeningToday = startDate <= targetDate && endDate >= targetDate
 
-      if (lat && lng && startDate <= targetDate && endDate >= targetDate && isSpringFlowerFestival) {
+      if (lat && lng && isHappeningToday) {
         // 가중치 연산 실행
         const { status: finalCalculatedStatus, score } = calculateCongestionFromComments(festival.communityComments)
 

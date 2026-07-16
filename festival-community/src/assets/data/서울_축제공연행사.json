@@ -3107,15 +3107,7 @@
       "placeinfo": "",
       "spendtimefestival": "",
       "discountinfofestival": "",
-      "usetimefestival": "무료",
-      "communityComments": [
-        {"author": "cherry_blossom", "content": "윤중로 벚꽃길 사람 진짜 홍수입니다. 그냥 인파에 밀려가요.", "tag": "혼잡"},
-        {"author": "parking_hell", "content": "국회 뒤편 도로 전체 통제라 차 무조건 막힙니다. 지하철 여의나루역 이용하세요.", "tag": "혼잡"},
-        {"author": "food_truck", "content": "더현대 미식정원 푸드존 줄만 40분 서야 합니다. 대기 장난 아니네요.", "tag": "혼잡"},
-        {"author": "photo_fail", "content": "사진 찍으면 무조건 다른 사람 20명 같이 나옵니다ㅋㅋㅋ 인구밀도 최상!", "tag": "혼잡"},
-        {"author": "ssafy_king", "content": "여의나루역 출구 나오는 계단부터 정체가 심해서 올라오는데 한참 걸렸네요.", "tag": "혼잡"},
-        {"author": "dust_wind", "content": "사람이 너무 빽빽하게 모여 있어서 먼지도 많고 기 다 빨려서 철수합니다.", "tag": "혼잡"}
-      ]
+      "usetimefestival": "무료"
     },
     {
       "addr1": "서울특별시 종로구 동망산길 150 (숭인동)",
@@ -3295,12 +3287,7 @@
       "placeinfo": "",
       "spendtimefestival": "",
       "discountinfofestival": "",
-      "usetimefestival": "무료",
-      "communityComments": [
-        {"author": "nodeul_spring", "content": "잔디마당 벤치랑 쉼터 파라솔 쪽은 다 찼는데, 야외 잔디 공간이 넓어서 널널하게 앉아있기 좋습니다.", "tag": "보통"},
-        {"author": "cant_be_blue", "content": "2부 라이브 콘서트 무대 앞만 의자들이 차있고 돗자리 구역은 간격 여유 있고 쾌적해요.", "tag": "보통"},
-        {"author": "nodeul_walk", "content": "한강대교 걸어 들어올 땐 바람 세고 복잡했는데 섬 내부는 아기자기하고 딱 기분 좋은 밀도네요.", "tag": "보통"}
-      ]
+      "usetimefestival": "무료"
     },
     {
       "addr1": "서울특별시 서대문구 모래내로 370 (홍은동)",
@@ -3345,13 +3332,7 @@
       "placeinfo": "",
       "spendtimefestival": "",
       "discountinfofestival": "",
-      "usetimefestival": "무료",
-      "communityComments": [
-        {"author": "hongje_falls", "content": "홍제폭포 앞 광장에 음악회 보려는 분들이 의자 꽉 채우고 서서 보느라 다소 북적입니다.", "tag": "보통"},
-        {"author": "ansan_walk", "content": "안산 자락길 벚꽃 터널 구간은 통행량이 좀 있는 편인데 걷기에 밀리지 않고 괜찮아요.", "tag": "보통"},
-        {"author": "kim_fan", "content": "벚꽃마당 무대 행사 시작할 때 일시적으로 인파 밀도가 빡세졌다가 지금은 원활해요.", "tag": "보통"},
-        {"author": "cafe_water", "content": "폭포 카페 자리는 만석인데 테이크아웃해서 징검다리 거닐기엔 아주 적당한 밀도입니다.", "tag": "보통"}
-      ]
+      "usetimefestival": "무료"
     },
     {
       "addr1": "서울특별시 강서구 하늘길 지하77 (방화동)",
@@ -3531,14 +3512,7 @@
       "placeinfo": "",
       "spendtimefestival": "",
       "discountinfofestival": "",
-      "usetimefestival": "무료",
-      "communityComments": [
-        {"author": "yangjae_stream", "content": "영동1교 수변무대 개막 콘서트 자리는 돗자리로 완전 포화 상태네요. 야간 점등 보러 온 연인들이 진짜 꽉 차서 혼잡합니다.", "tag": "혼잡"},
-        {"author": "seocho_citizen", "content": "양재천길 주변 일방통행 중인데도 양재천 예술제 마켓 푸드존 주변은 발 디딜 틈 없이 빽빽해요.", "tag": "혼잡"},
-        {"author": "lantern_love", "content": "등불 터널 쪽 사진 찍으려고 멈춰 서는 정체 병목 구간이 심합니다. 안전요원 통제 따르셔야 해요.", "tag": "혼잡"},
-        {"author": "yj_parking", "content": "근처 공영주차장 만차라 그냥 인근 매봉역이나 양재역 대중교통 이용하시는 거 강력 추천합니다.", "tag": "혼잡"},
-        {"author": "warm_tea", "content": "수변 카페들도 줄 서서 기다려야 하고 축제 테마 등불 야경 보러 온 인파가 장난 아니게 밀집되어 있습니다.", "tag": "혼잡"}
-      ]
+      "usetimefestival": "무료"
     },
     {
       "addr1": "서울특별시 강남구 봉은사로 531 (삼성동)",
@@ -3604,7 +3578,7 @@
       "modifiedtime": "20260326092041",
       "sigungucode": "",
       "tel": "02-2147-2800",
-      "title": "송파구 호수벚꽃축제",
+      "title": "송파구 호수벚꽃 축제",
       "zipcode": "05617",
       "lDongRegnCd": "11",
       "lDongSignguCd": "710",
@@ -3628,14 +3602,7 @@
       "placeinfo": "",
       "spendtimefestival": "",
       "discountinfofestival": "",
-      "usetimefestival": "공연 무료 / 프리마켓, 푸드트럭, 체험부스 유료",
-      "communityComments": [
-        {"author": "lotte_mall", "content": "주말 롯데월드몰 인근이랑 호수 산책로 전체가 인파로 꽉 잠겼습니다.", "tag": "혼잡"},
-        {"author": "lake_walk", "content": "호수 한 바퀴 반시계방향 일방통행 중인데도 멈춰 서기 힘들 정도로 사람이 빽빽해요.", "tag": "혼잡"},
-        {"author": "cafe_wait", "content": "주변 방이동 먹자골목이랑 호수 뷰 카페들 전부 웨이팅 1시간 이상입니다.", "tag": "혼잡"},
-        {"author": "night_view", "content": "야간 경관 조명 켜지니까 포토존 주변 유동 동선이 완전히 마비상태네요.", "tag": "혼잡"},
-        {"author": "couple_hell", "content": "세상의 모든 커플들이 석촌호수로 쏟아져 나온 비주얼입니다. 엄청 복잡해요.", "tag": "혼잡"}
-      ]
+      "usetimefestival": "공연 무료 / 프리마켓, 푸드트럭, 체험부스 유료"
     },
     {
       "addr1": "서울특별시 종로구 인사동9길 26 (견지동)",
