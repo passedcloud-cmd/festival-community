@@ -159,8 +159,8 @@ function handleSubmit() {
   cursor: pointer;
 }
 .tag-option-btn.active {
-  background: #3b82f6;
-  color: white;
-  border-color: #3b82f6;
+  background: #FAC775;
+  color: #412402;
+  border-color: #EF9F27;
 }
 </style>

@@ -143,8 +143,9 @@ function handleCommentDelete(commentId) {
 
 <style scoped>
 .post-item {
-  border: 1px solid #eee;
-  border-radius: 6px;
+  background: white;
+  border: 0.5px solid #dbe4ec;
+  border-radius: 8px;
   padding: 12px;
   margin-bottom: 10px;
   list-style: none;
