@@ -9,7 +9,7 @@ import ChatbotWidget from './components/ChatbotWidget.vue'
   <Header />
   <RouterView />
   <Footer />
-  <!-- <ChatbotWidget /> -->
+  <ChatbotWidget />
 </template>
 
 <style scoped>

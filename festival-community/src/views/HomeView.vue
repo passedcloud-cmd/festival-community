@@ -2,7 +2,7 @@
 import festivalData from '@/data/서울_축제공연행사.json'
 import { ref, computed, onMounted, nextTick } from 'vue'
 import FestivalMap from '@/components/FestivalMap.vue'
-// import ChatbotWidget from '@/components/ChatbotWidget.vue' 
+import ChatbotWidget from '@/components/ChatbotWidget.vue' 
 
 // 게시판 관련
 import { usePosts } from '../composables/usePosts'
@@ -115,6 +115,7 @@ const {
   keyword,
   selectedTag,
   tagOptions,
+  generationOptions,
   addPost,
   updatePost,
   deletePost,
@@ -122,12 +123,12 @@ const {
 
 const editingPost = ref(null)
 
-function handleSubmit({ title, content, tag }) {
+function handleSubmit({ title, content, generation, password }) {
   if (editingPost.value) {
-    updatePost(editingPost.value.id, { title, content, tag })
+    updatePost(editingPost.value.id, { title, content, generation })
     editingPost.value = null
   } else {
-    addPost({ title, content, tag })
+    addPost({ title, content, generation, password })
   }
 }
 </script>
@@ -150,8 +151,8 @@ function handleSubmit({ title, content, tag }) {
       <h2>익명 게시판</h2>
 
       <PostForm
-        :tag-options="tagOptions"
         :editing-post="editingPost"
+        :generation-options="generationOptions"
         @submit="handleSubmit"
         @cancel-edit="editingPost = null"
       />
@@ -215,7 +216,7 @@ function handleSubmit({ title, content, tag }) {
     </section>
 
     <!-- 5. AI 챗봇 (화면 오른쪽 아래에 고정으로 뜸) -->
-    <!-- <ChatbotWidget /> --> 
+    <ChatbotWidget />
 
     <!-- 6. 북마크한 축제 목록 (화면 오른쪽에 고정, 스크롤해도 따라다님) -->
     <aside class="bookmark-sidebar" v-if="bookmarkedFestivals.length">
