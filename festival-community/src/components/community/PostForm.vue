@@ -12,9 +12,22 @@
       placeholder="내용을 입력하세요"
       required
     ></textarea>
-    <select v-model="tag">
-      <option v-for="t in tagOptions" :key="t" :value="t">{{ t }}</option>
-    </select>
+    <label class="generation-label">
+      SSAFY 기수 (선택)
+      <select v-model="generation" size="1">
+        <option v-for="g in generationOptions" :key="g" :value="g">
+          {{ g }}
+        </option>
+      </select>
+    </label>
+
+    <input
+      v-if="!isEditMode"
+      v-model="password"
+      type="password"
+      placeholder="비밀번호 (수정/삭제 시 필요)"
+      required
+    />
     <button type="submit">{{ isEditMode ? '수정 완료' : '게시글 등록' }}</button>
     <button v-if="isEditMode" type="button" @click="$emit('cancel-edit')">
       취소
@@ -26,7 +39,7 @@
 import { ref, watch, computed } from 'vue'
 
 const props = defineProps({
-  tagOptions: { type: Array, required: true },
+  generationOptions: { type: Array, required: true },
   editingPost: { type: Object, default: null },
 })
 
@@ -34,7 +47,8 @@ const emit = defineEmits(['submit', 'cancel-edit'])
 
 const title = ref('')
 const content = ref('')
-const tag = ref(props.tagOptions[0])
+const generation = ref(props.generationOptions[props.generationOptions.length - 1])
+const password = ref('')
 
 const isEditMode = computed(() => !!props.editingPost)
 
@@ -44,22 +58,29 @@ watch(
     if (post) {
       title.value = post.title
       content.value = post.content
-      tag.value = post.tag
+      generation.value = post.generation
     } else {
       title.value = ''
       content.value = ''
-      tag.value = props.tagOptions[0]
+      generation.value = props.generationOptions[props.generationOptions.length - 1]
+      password.value = ''
     }
   },
   { immediate: true }
 )
 
 function handleSubmit() {
-  emit('submit', { title: title.value, content: content.value, tag: tag.value })
+  emit('submit', {
+    title: title.value,
+    content: content.value,
+    generation: generation.value,
+    password: password.value,
+  })
   if (!isEditMode.value) {
     title.value = ''
     content.value = ''
-    tag.value = props.tagOptions[0]
+    generation.value = props.generationOptions[props.generationOptions.length - 1]
+    password.value = ''
   }
 }
 </script>
@@ -82,5 +103,12 @@ function handleSubmit() {
   align-self: flex-start;
   padding: 6px 14px;
   cursor: pointer;
+}
+.generation-label {
+  font-size: 13px;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 </style>

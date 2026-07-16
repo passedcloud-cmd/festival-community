@@ -2,7 +2,10 @@ import { ref, computed, watch } from 'vue'
 
 const STORAGE_KEY = 'anonymous-board-posts'
 const TAG_OPTIONS = ['축제', '음식', '공연', '기타']
-
+const GENERATION_OPTIONS = [
+  ...Array.from({ length: 16 }, (_, i) => `${i + 1}기`),
+  'SSAFY무관',
+]
 function loadPosts() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
@@ -42,22 +45,31 @@ export function usePosts() {
       .sort((a, b) => b.createdAt - a.createdAt)
   })
 
-  function addPost({ title, content, tag }) {
-    posts.value.push({
-      id: Date.now(),
-      title,
-      content,
-      tag: tag || '기타',
-      createdAt: Date.now(),
-    })
+  function addPost({ title, content, tag, password, generation }) {
+  posts.value.push({
+    id: Date.now(),
+    title,
+    content,
+    tag: tag || '기타',
+    generation: generation || 'SSAFY무관',  
+    createdAt: Date.now(),
+    password,
+  })
+}
+
+  function verifyPassword(id, password) {
+    const target = posts.value.find((p) => p.id === id)
+    if (!target) return false
+    return target.password === password
   }
 
-  function updatePost(id, { title, content, tag }) {
-    const target = posts.value.find((p) => p.id === id)
-    if (!target) return
-    target.title = title
-    target.content = content
-    target.tag = tag
+  function updatePost(id, { title, content, tag, generation }) {
+  const target = posts.value.find((p) => p.id === id)
+  if (!target) return
+  target.title = title
+  target.content = content
+  target.tag = tag
+  target.generation = generation   // ← 추가
   }
 
   function deletePost(id) {
@@ -70,8 +82,10 @@ export function usePosts() {
     keyword,
     selectedTag,
     tagOptions: TAG_OPTIONS,
+    generationOptions: GENERATION_OPTIONS,
     addPost,
     updatePost,
     deletePost,
+    verifyPassword, // ← 새로 추가된 함수
   }
 }
