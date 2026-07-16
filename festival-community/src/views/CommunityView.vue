@@ -3,8 +3,8 @@
     <h1>익명 게시판</h1>
 
     <PostForm
-      :tag-options="tagOptions"
       :editing-post="editingPost"
+      :generation-options="generationOptions"
       @submit="handleSubmit"
       @cancel-edit="editingPost = null"
     />
@@ -35,6 +35,7 @@ const {
   keyword,
   selectedTag,
   tagOptions,
+  generationOptions,
   addPost,
   updatePost,
   deletePost,
@@ -42,12 +43,12 @@ const {
 
 const editingPost = ref(null)
 
-function handleSubmit({ title, content, tag }) {
+function handleSubmit({ title, content, generation, password }) {
   if (editingPost.value) {
-    updatePost(editingPost.value.id, { title, content, tag })
+    updatePost(editingPost.value.id, { title, content, generation })
     editingPost.value = null
   } else {
-    addPost({ title, content, tag })
+    addPost({ title, content, generation, password })
   }
 }
 </script>
