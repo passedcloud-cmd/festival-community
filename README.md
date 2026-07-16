@@ -24,8 +24,7 @@
 ### ⭐ 저장소 복제 및 패키지 설치
 ```bash
 # 1. 프로젝트 복제
-git clone [https://github.com/](https://github.com/)[passedcloud-cmd]/festival-community.git
-cd festival-community
+git clone https://github.com/passedcloud-cmd/festival-community
 
 # 2. 필수 의존성 패키지 설치
 npm install
