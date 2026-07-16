@@ -1,7 +1,8 @@
+import { getEffectiveTodayEndTimestamp } from '@/config/demoDate'
 import { ref, computed, watch } from 'vue'
 
 const STORAGE_KEY = 'anonymous-board-posts'
-const TAG_OPTIONS = ['축제', '음식', '공연', '기타']
+const TAG_OPTIONS = ['축제', '음식', '공연', '동행', '기타']
 const GENERATION_OPTIONS = [
   ...Array.from({ length: 16 }, (_, i) => `${i + 1}기`),
   'SSAFY무관',
@@ -30,20 +31,22 @@ export function usePosts() {
   const keyword = ref('')
   const selectedTag = ref('전체')
 
-  const filteredPosts = computed(() => {
-    return posts.value
-      .filter((p) => {
-        if (!keyword.value) return true
-        return (
-          p.title.includes(keyword.value) || p.content.includes(keyword.value)
-        )
-      })
-      .filter((p) => {
-        if (selectedTag.value === '전체') return true
-        return p.tag === selectedTag.value
-      })
-      .sort((a, b) => b.createdAt - a.createdAt)
-  })
+const filteredPosts = computed(() => {
+  const cutoff = getEffectiveTodayEndTimestamp()
+  return posts.value
+    .filter((p) => p.createdAt <= cutoff) // 💡 설정된 날짜 이후 작성글 숨김
+    .filter((p) => {
+      if (!keyword.value) return true
+      return (
+        p.title.includes(keyword.value) || p.content.includes(keyword.value)
+      )
+    })
+    .filter((p) => {
+      if (selectedTag.value === '전체') return true
+      return p.tag === selectedTag.value
+    })
+    .sort((a, b) => b.createdAt - a.createdAt)
+})
 
   function addPost({ title, content, tag, password, generation }) {
     posts.value.push({

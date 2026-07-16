@@ -13,6 +13,7 @@
 </template>
 
 <script setup>
+import { getEffectiveTodayNumber, getEffectiveToday } from '@/config/demoDate'
 import { onMounted, onUnmounted } from 'vue'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -22,7 +23,7 @@ import festivalData from '@/assets/data/서울_축제공연행사.json'
 
 let map = null
 const markersMap = new Map()
-const today = new Date()
+const today = getEffectiveToday()
 const todayLabel = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`
 
 // 🎨 1. 상태에 따른 동적 SVG 물방울 마커 생성기
@@ -159,11 +160,7 @@ onMounted(() => {
 
   if (festivalData && festivalData.items) {
     // 💡 오늘 날짜를 "YYYYMMDD" 숫자 형식으로 변환 (JSON 데이터 날짜 형식과 동일하게)
-    const today = new Date()
-    const yyyy = today.getFullYear()
-    const mm = String(today.getMonth() + 1).padStart(2, '0')
-    const dd = String(today.getDate()).padStart(2, '0')
-    const targetDate = parseInt(`${yyyy}${mm}${dd}`, 10)
+    const targetDate = getEffectiveTodayNumber()
 
     festivalData.items.forEach((festival) => {
       const lat = parseFloat(festival.mapy)
