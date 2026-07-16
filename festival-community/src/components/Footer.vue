@@ -2,7 +2,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <p>2026 서울 축제 실시간 혼잡도 커뮤니티</p>
-      <p class="footer-sub">SSAFY 팀 프로젝트</p>
+      <p class="footer-sub">SSAFY 1팀 프로젝트</p>
     </div>
   </footer>
 </template>
