@@ -12,7 +12,7 @@
       <transition name="fade">
         <div v-if="isOpen" class="chat-window" @click.stop>
           <header class="chat-header">
-            <div class="chat-title">LocalHub 서울 축제 챗봇 (Gemini)</div>
+            <div class="chat-title">LocalHub 서울 축제 챗봇</div>
             <button class="chat-close" @click="closeChat" aria-label="Close chat">✕</button>
           </header>
 
@@ -47,7 +47,7 @@ import { GoogleGenAI } from '@google/genai'
 import festivalData from '@/assets/data/서울_축제공연행사.json'
 
 const isOpen = ref(false)
-const messages = ref([{ from: 'bot', text: '안녕하세요! 완전 무료 구글 AI 기반 서울 축제 챗봇입니다. 무엇이든 물어보세요!' }])
+const messages = ref([{ from: 'bot', text: '안녕하세요! 서울 축제 챗봇입니다. 무엇이든 물어보세요!' }])
 const newMessage = ref('')
 const bodyRef = ref(null)
 const isLoading = ref(false)
