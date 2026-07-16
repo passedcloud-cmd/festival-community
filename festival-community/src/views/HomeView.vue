@@ -16,8 +16,47 @@ const festivals = festivalData.items
 const isExpanded = ref(false)
 const visibleCount = 8
 
+// 💡 카테고리 매핑표 (lclsSystm3 코드 → 테마 이름)
+const categoryMap = {
+  'EV010100': '전통/역사',
+  'EV010400': '전통/역사',
+  'EV020100': '전통/역사',
+  'EV010500': '자연/꽃',
+  'EV010200': '문화예술',
+  'EV020200': '문화예술',
+  'EV020500': '문화예술',
+  'EV020600': '문화예술',
+  'EV020700': '문화예술',
+  'EV020800': '문화예술',
+  'EV020900': '문화예술',
+  'EV030100': '전시/박람회',
+  'EV030200': '전시/박람회',
+  'EV010600': '생활문화',
+  'EV030400': '기타행사',
+}
+
+function getCategory(festival) {
+  return categoryMap[festival.lclsSystm3] || '기타행사'
+}
+
+const categories = ['전체', '전통/역사', '자연/꽃', '문화예술', '전시/박람회', '생활문화', '기타행사']
+const selectedCategory = ref('전체')
+
+function selectCategory(cat) {
+  selectedCategory.value = cat
+  isExpanded.value = false
+}
+
+// 💡 카테고리 필터가 적용된 목록
+const categoryFilteredFestivals = computed(() => {
+  if (selectedCategory.value === '전체') return festivals
+  return festivals.filter(f => getCategory(f) === selectedCategory.value)
+})
+
 const visibleFestivals = computed(() => {
-  return isExpanded.value ? festivals : festivals.slice(0, visibleCount)
+  return isExpanded.value
+    ? categoryFilteredFestivals.value
+    : categoryFilteredFestivals.value.slice(0, visibleCount)
 })
 
 function toggleExpand() {
@@ -86,6 +125,19 @@ function handleSubmit({ title, content, tag }) {
     <!-- 4. 축제 목록 -->
     <section class="festival-section">
       <h2>축제 목록</h2>
+
+      <!-- 💡 카테고리 필터 버튼 -->
+      <div class="category-filter">
+        <button
+          v-for="cat in categories"
+          :key="cat"
+          :class="['category-btn', { active: selectedCategory === cat }]"
+          @click="selectCategory(cat)"
+        >
+          {{ cat }}
+        </button>
+      </div>
+
       <div class="festival-list">
         <div v-for="festival in visibleFestivals" :key="festival.contentid" class="festival-card">
           <img :src="festival.firstimage" :alt="festival.title" v-if="festival.firstimage" />
@@ -154,5 +206,30 @@ function handleSubmit({ title, content, tag }) {
   border-radius: 20px;
   background: white;
   cursor: pointer;
+}
+
+/* 💡 카테고리 필터 버튼 스타일 */
+.category-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.category-btn {
+  padding: 6px 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+.category-btn:hover {
+  border-color: #999;
+}
+.category-btn.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
 }
 </style>
