@@ -90,7 +90,7 @@ const bookmarkedFestivals = computed(() => {
   return festivals.filter(f => bookmarkedIds.value.includes(f.contentid))
 })
 
-// 💡 하이라이트 + 이동 관련
+// 하이라이트 + 이동 관련
 const highlightedId = ref(null)
 
 async function scrollToFestival(contentid) {
@@ -123,12 +123,12 @@ const {
 
 const editingPost = ref(null)
 
-function handleSubmit({ title, content, generation, password }) {
+function handleSubmit({ title, content, generation, tag, password }) {
   if (editingPost.value) {
-    updatePost(editingPost.value.id, { title, content, generation })
+    updatePost(editingPost.value.id, { title, content, generation, tag })
     editingPost.value = null
   } else {
-    addPost({ title, content, generation, password })
+    addPost({ title, content, generation, tag, password })
   }
 }
 </script>
@@ -153,6 +153,7 @@ function handleSubmit({ title, content, generation, password }) {
       <PostForm
         :editing-post="editingPost"
         :generation-options="generationOptions"
+        :tag-options="tagOptions"
         @submit="handleSubmit"
         @cancel-edit="editingPost = null"
       />

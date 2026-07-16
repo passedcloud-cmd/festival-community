@@ -46,16 +46,17 @@ export function usePosts() {
   })
 
   function addPost({ title, content, tag, password, generation }) {
-  posts.value.push({
-    id: Date.now(),
-    title,
-    content,
-    tag: tag || '기타',
-    generation: generation || 'SSAFY무관',  
-    createdAt: Date.now(),
-    password,
-  })
-}
+    posts.value.push({
+      id: Date.now(),
+      title,
+      content,
+      tag: tag || '기타',
+      generation: generation || 'SSAFY무관',
+      createdAt: Date.now(),
+      password,
+      comments: [],
+    })
+  }
 
   function verifyPassword(id, password) {
     const target = posts.value.find((p) => p.id === id)
@@ -64,16 +65,44 @@ export function usePosts() {
   }
 
   function updatePost(id, { title, content, tag, generation }) {
-  const target = posts.value.find((p) => p.id === id)
-  if (!target) return
-  target.title = title
-  target.content = content
-  target.tag = tag
-  target.generation = generation   // ← 추가
+    const target = posts.value.find((p) => p.id === id)
+    if (!target) return
+    target.title = title
+    target.content = content
+    target.tag = tag
+    target.generation = generation
   }
 
   function deletePost(id) {
     posts.value = posts.value.filter((p) => p.id !== id)
+  }
+
+  // 💡 댓글 추가 시 비밀번호도 같이 저장
+  function addComment(postId, content, password) {
+    const target = posts.value.find((p) => p.id === postId)
+    if (!target) return
+    if (!target.comments) target.comments = []
+    target.comments.push({
+      id: Date.now(),
+      content,
+      password,
+      createdAt: Date.now(),
+    })
+  }
+
+  // 💡 댓글 비밀번호 확인
+  function verifyCommentPassword(postId, commentId, password) {
+    const post = posts.value.find((p) => p.id === postId)
+    if (!post || !post.comments) return false
+    const comment = post.comments.find((c) => c.id === commentId)
+    if (!comment) return false
+    return comment.password === password
+  }
+
+  function deleteComment(postId, commentId) {
+    const target = posts.value.find((p) => p.id === postId)
+    if (!target || !target.comments) return
+    target.comments = target.comments.filter((c) => c.id !== commentId)
   }
 
   return {
@@ -86,6 +115,9 @@ export function usePosts() {
     addPost,
     updatePost,
     deletePost,
-    verifyPassword, // ← 새로 추가된 함수
+    verifyPassword,
+    addComment,
+    verifyCommentPassword,
+    deleteComment,
   }
 }
